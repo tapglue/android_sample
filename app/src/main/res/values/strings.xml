@@ -1,0 +1,36 @@
+<!--
+  ~ Copyright (c) 2015 Tapglue (https://www.tapglue.com/). All rights reserved.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+    <string name="app_name">Example App</string>
+    <string name="toast_loginerror">Login error</string>
+    <string name="toast_registrationerror">Registration error</string>
+    <string name="toast_networkerror">Network error</string>
+    <string name="title_activity_user_details">UserDetailsActivity</string>
+    <string name="title_activity_feed">FeedActivity</string>
+    <string name="search">Search</string>
+    <string name="friends">Friends</string>
+    <string name="followedby">Followed by</string>
+    <string name="follows">Follows</string>
+    <string name="pendingfriendrequests">Pending friends requests</string>
+    <string name="feed">Feed</string>
+    <string name="unfriend">Unfriend</string>
+    <string name="addfriend">Add to friends</string>
+    <string name="unfollow">Unfollow</string>
+    <string name="pendindfriendrequests">Pending friend req</string>
+    <string name="follow">Follow</string>
+    <string name="addtofriends">Add to friends</string>
+</resources>
