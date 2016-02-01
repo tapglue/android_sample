@@ -24,7 +24,9 @@ import android.widget.Toast;
 
 import com.tapglue.Tapglue;
 import com.tapglue.model.TGEvent;
+import com.tapglue.model.TGEventsList;
 import com.tapglue.model.TGFeed;
+import com.tapglue.model.TGVisibility;
 import com.tapglue.networking.requests.TGRequestCallback;
 import com.tapglue.networking.requests.TGRequestErrorType;
 
@@ -32,7 +34,7 @@ public class EventsActivity extends FeedActivity {
 
     @Override
     protected void loadData() {
-        Tapglue.feed().retrieveEventsForCurrentUser(new TGRequestCallback<TGFeed>() {
+        Tapglue.feed().retrieveEventsForCurrentUser(new TGRequestCallback<TGEventsList>() {
             @Override
             public boolean callbackIsEnabled() {
                 return callbackEnabled;
@@ -44,7 +46,7 @@ public class EventsActivity extends FeedActivity {
             }
 
             @Override
-            public void onRequestFinished(final TGFeed tgFeed, boolean b) {
+            public void onRequestFinished(final TGEventsList tgFeed, boolean changeDoneOnline) {
                 mPosts.post(new Runnable() {
                     @Override
                     public void run() {
@@ -95,7 +97,7 @@ public class EventsActivity extends FeedActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_add) {
             TGEvent event = new TGEvent()
-                    .setVisibility(TGEvent.TGEventVisibility.Private)
+                    .setVisibility(TGVisibility.Private)
                     .setType("defaultType");
             Tapglue.event().createEvent(event, new TGRequestCallback<TGEvent>() {
                 @Override
@@ -116,7 +118,7 @@ public class EventsActivity extends FeedActivity {
             return true;
         } else if (item.getItemId() == R.id.action_add2) {
             TGEvent event = new TGEvent()
-                    .setVisibility(TGEvent.TGEventVisibility.Connections)
+                    .setVisibility(TGVisibility.Connections)
                     .setType("defaultType");
             Tapglue.event().createEvent(event, new TGRequestCallback<TGEvent>() {
                 @Override
@@ -136,7 +138,7 @@ public class EventsActivity extends FeedActivity {
             });
         } else if (item.getItemId() == R.id.action_add3) {
             TGEvent event = new TGEvent()
-                    .setVisibility(TGEvent.TGEventVisibility.Public)
+                    .setVisibility(TGVisibility.Public)
                     .setType("defaultType");
             Tapglue.event().createEvent(event, new TGRequestCallback<TGEvent>() {
                 @Override

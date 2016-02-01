@@ -43,7 +43,8 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     provided 'frankiesardo:icepick-processor:3.1.0'
-    compile 'com.tapglue.android:tapglue-android-sdk:1.0.0'
+    //compile 'com.tapglue.android:tapglue-android-sdk:1.1.1'
+    compile (name: 'tapglue', ext: 'aar')
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'frankiesardo:icepick:3.1.0'

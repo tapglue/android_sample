@@ -43,7 +43,7 @@ public class FeedActivity extends AppCompatActivity {
     ListView mPosts;
 
     protected void loadData() {
-        Tapglue.feed().retrieveFeedForCurrentUser(new TGRequestCallback<TGFeed>() {
+        Tapglue.feed().retrieveNewsFeedForCurrentUser(new TGRequestCallback<TGFeed>() {
             @Override
             public boolean callbackIsEnabled() {
                 return callbackEnabled;

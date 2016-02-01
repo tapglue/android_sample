@@ -27,7 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tapglue.Tapglue;
-import com.tapglue.model.TGConnectionUser;
+import com.tapglue.model.TGUser;
 import com.tapglue.networking.requests.TGRequestCallback;
 import com.tapglue.networking.requests.TGRequestErrorType;
 
@@ -43,7 +43,7 @@ public class UserDetailsActivity extends AppCompatActivity {
      * User data to show
      */
     @State
-    TGConnectionUser mData;
+    TGUser mData;
     @Bind(R.id.follow)
     Button mFollow;
     @Bind(R.id.friend)
@@ -58,7 +58,7 @@ public class UserDetailsActivity extends AppCompatActivity {
     TextView mUsername;
     private boolean callbackEnabled;
 
-    public static Intent showUserDetails(Context ctx, TGConnectionUser user) {
+    public static Intent showUserDetails(Context ctx, TGUser user) {
         Intent output = new Intent(ctx, UserDetailsActivity.class);
         output.putExtra(INTENTEXTRA_USER, user);
         return output;
@@ -69,7 +69,7 @@ public class UserDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Icepick.restoreInstanceState(this, savedInstanceState);
         setContentView(R.layout.activity_user_details);
-        mData = (TGConnectionUser) getIntent().getExtras().getSerializable(INTENTEXTRA_USER);
+        mData = (TGUser) getIntent().getExtras().getSerializable(INTENTEXTRA_USER);
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
@@ -108,7 +108,7 @@ public class UserDetailsActivity extends AppCompatActivity {
             mFollow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
-                    Tapglue.connections().unFollowUser(mData.getID(), new TGRequestCallback<Boolean>() {
+                    Tapglue.connection().unfollowUser(mData.getID(), new TGRequestCallback<Boolean>() {
                         @Override
                         public boolean callbackIsEnabled() {
                             return callbackEnabled;
@@ -137,7 +137,7 @@ public class UserDetailsActivity extends AppCompatActivity {
             mFollow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
-                    Tapglue.connections().followUser(mData.getID(), new TGRequestCallback<Boolean>() {
+                    Tapglue.connection().followUser(mData.getID(), new TGRequestCallback<Boolean>() {
                         @Override
                         public boolean callbackIsEnabled() {
                             return callbackEnabled;
@@ -180,7 +180,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     mFriend.setEnabled(false);
-                    Tapglue.connections().unFriendUser(mData.getID(), new TGRequestCallback<Boolean>() {
+                    Tapglue.connection().unfriendUser(mData.getID(), new TGRequestCallback<Boolean>() {
                         @Override
                         public boolean callbackIsEnabled() {
                             return callbackEnabled;
@@ -202,7 +202,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                                     mFriend.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            Tapglue.connections().friendUser(mData.getID(), new TGRequestCallback<Boolean>() {
+                                            Tapglue.connection().friendUser(mData.getID(), new TGRequestCallback<Boolean>() {
                                                 @Override
                                                 public boolean callbackIsEnabled() {
                                                     return callbackEnabled;
@@ -233,7 +233,7 @@ public class UserDetailsActivity extends AppCompatActivity {
             mFriend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Tapglue.connections().friendUser(mData.getID(), new TGRequestCallback<Boolean>() {
+                    Tapglue.connection().friendUser(mData.getID(), new TGRequestCallback<Boolean>() {
                         @Override
                         public boolean callbackIsEnabled() {
                             return callbackEnabled;

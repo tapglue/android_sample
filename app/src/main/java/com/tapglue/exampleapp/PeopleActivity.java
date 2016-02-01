@@ -35,9 +35,9 @@ import android.widget.Toast;
 
 import com.tapglue.Tapglue;
 import com.tapglue.model.TGConnection;
-import com.tapglue.model.TGConnectionUser;
-import com.tapglue.model.TGConnectionUsersList;
+import com.tapglue.model.TGUsersList;
 import com.tapglue.model.TGPendingConnections;
+import com.tapglue.model.TGUser;
 import com.tapglue.networking.requests.TGRequestCallback;
 import com.tapglue.networking.requests.TGRequestErrorType;
 
@@ -53,27 +53,38 @@ import icepick.State;
 public class PeopleActivity extends AppCompatActivity {
 
     private static final String INTENTEXTRA_MODE = "MODE";
+
     boolean callbacksEnabled = false;
+
     /**
      * This variable determines activity components
      */
     @State
     ActivityMode mCurrentActivityMode = ActivityMode.FRIENDS_LIST;
+
     @State
     String mCurrentSearchPhrase = null;
-    TGConnectionUsersList mData;
+
+    TGUsersList mData;
+
     @Bind(R.id.mode)
     TextView mMode;
+
     @State
     Boolean mNeedForUpdate = true;
+
     @Bind(R.id.people_list)
     ListView mPeopleList;
+
     @Bind(R.id.search_area)
     View mSearchArea;
+
     @Bind(R.id.search_button)
     ImageButton mSearchButton;
+
     @Bind(R.id.search_text)
     TextView mSearchText;
+
     private TGPendingConnections mPendingData;
 
     /**
@@ -92,7 +103,7 @@ public class PeopleActivity extends AppCompatActivity {
     private void loadData() {
         switch (mCurrentActivityMode) {
             case PENDING_FRIENDS:
-                Tapglue.connections().getPendingConnections(new TGRequestCallback<TGPendingConnections>() {
+                Tapglue.connection().getPendingConnections(new TGRequestCallback<TGPendingConnections>() {
                     @Override
                     public boolean callbackIsEnabled() {
                         return callbacksEnabled;
@@ -111,7 +122,7 @@ public class PeopleActivity extends AppCompatActivity {
                 });
                 break;
             case FRIENDS_LIST:
-                Tapglue.feed().retrieveFriendsForCurrentUser(new TGRequestCallback<TGConnectionUsersList>() {
+                Tapglue.user().retrieveFriendsForCurrentUser(new TGRequestCallback<TGUsersList>() {
                     @Override
                     public boolean callbackIsEnabled() {
                         return callbacksEnabled;
@@ -123,7 +134,7 @@ public class PeopleActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onRequestFinished(final TGConnectionUsersList tgConnectionUsersList, boolean b) {
+                    public void onRequestFinished(final TGUsersList tgConnectionUsersList, boolean b) {
                         mSearchArea.post(new Runnable() {
                             @Override
                             public void run() {
@@ -135,7 +146,7 @@ public class PeopleActivity extends AppCompatActivity {
                 });
                 break;
             case FOLLOWERS:
-                Tapglue.feed().retrieveFollowersForCurrentUser(new TGRequestCallback<TGConnectionUsersList>() {
+                Tapglue.user().retrieveFollowersForCurrentUser(new TGRequestCallback<TGUsersList>() {
                     @Override
                     public boolean callbackIsEnabled() {
                         return callbacksEnabled;
@@ -147,7 +158,7 @@ public class PeopleActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onRequestFinished(final TGConnectionUsersList tgConnectionUsersList, boolean b) {
+                    public void onRequestFinished(final TGUsersList tgConnectionUsersList, boolean b) {
                         mSearchArea.post(new Runnable() {
                             @Override
                             public void run() {
@@ -159,7 +170,7 @@ public class PeopleActivity extends AppCompatActivity {
                 });
                 break;
             case FOLLOWS:
-                Tapglue.feed().retrieveFollowsForCurrentUser(new TGRequestCallback<TGConnectionUsersList>() {
+                Tapglue.user().retrieveFollowsForCurrentUser(new TGRequestCallback<TGUsersList>() {
                     @Override
                     public boolean callbackIsEnabled() {
                         return callbacksEnabled;
@@ -171,7 +182,7 @@ public class PeopleActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onRequestFinished(final TGConnectionUsersList tgConnectionUsersList, boolean b) {
+                    public void onRequestFinished(final TGUsersList tgConnectionUsersList, boolean b) {
                         mSearchArea.post(new Runnable() {
                             @Override
                             public void run() {
@@ -186,7 +197,7 @@ public class PeopleActivity extends AppCompatActivity {
                 if (!TextUtils.isEmpty(mCurrentSearchPhrase)) {
                     mSearchButton.setEnabled(false);
                     mSearchText.setEnabled(false);
-                    Tapglue.user().search(mCurrentSearchPhrase, new TGRequestCallback<TGConnectionUsersList>() {
+                    Tapglue.user().search(mCurrentSearchPhrase, new TGRequestCallback<TGUsersList>() {
                         @Override
                         public boolean callbackIsEnabled() {
                             return callbacksEnabled;
@@ -200,7 +211,7 @@ public class PeopleActivity extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onRequestFinished(TGConnectionUsersList tgConnectionUsersList, boolean b) {
+                        public void onRequestFinished(TGUsersList tgConnectionUsersList, boolean b) {
                             mData = tgConnectionUsersList;
                             mSearchArea.post(new Runnable() {
                                 @Override
@@ -230,8 +241,9 @@ public class PeopleActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (mCurrentActivityMode == ActivityMode.FRIENDS_LIST)
+        if (mCurrentActivityMode == ActivityMode.FRIENDS_LIST) {
             getMenuInflater().inflate(R.menu.peoplelistmenu, menu);
+        }
         return true;
     }
 
@@ -270,8 +282,10 @@ public class PeopleActivity extends AppCompatActivity {
                         if (tgRequestErrorType.getCode().intValue() == 1001) {
                             startActivity(new Intent(PeopleActivity.this, LoginActivity.class));
                             finish();
-                        } else
+                        }
+                        else {
                             Toast.makeText(PeopleActivity.this, tgRequestErrorType.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
@@ -315,13 +329,13 @@ public class PeopleActivity extends AppCompatActivity {
     private void populateListData() {
         List<String> items = new ArrayList<>();
         List<Long> ids = new ArrayList<>();
-        if (mData == null && mPendingData == null)
-            return;
-        if (mData != null)
-            for (TGConnectionUser user : mData.getUsers()) {
+        if (mData == null && mPendingData == null) { return; }
+        if (mData != null) {
+            for (TGUser user : mData.getUsers()) {
                 items.add(user.getUserName());
                 ids.add(user.getID());
             }
+        }
         else {
             // pending
             for (TGConnection item : mPendingData.getIncoming()) {
@@ -335,11 +349,12 @@ public class PeopleActivity extends AppCompatActivity {
         mPeopleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                if (mData != null)
+                if (mData != null) {
                     startActivity(UserDetailsActivity.showUserDetails(PeopleActivity.this, mData.getUsers().get(position)));
+                }
                 else {
                     // confirm
-                    Tapglue.connections()
+                    Tapglue.connection()
                            .confirmConnection(mPendingData.getIncoming().get(position).getUserFromId(), TGConnection.TGConnectionType.FRIEND, new TGRequestCallback<Boolean>() {
                                @Override
                                public boolean callbackIsEnabled() {
@@ -383,10 +398,8 @@ public class PeopleActivity extends AppCompatActivity {
                 mSearchText.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void afterTextChanged(Editable s) {
-                        if (s.toString().length() > 3)
-                            mSearchButton.setEnabled(true);
-                        else
-                            mSearchButton.setEnabled(false);
+                        if (s.toString().length() > 3) { mSearchButton.setEnabled(true); }
+                        else { mSearchButton.setEnabled(false); }
                     }
 
                     @Override
@@ -435,17 +448,18 @@ public class PeopleActivity extends AppCompatActivity {
 
     private void updateActivityData() {
         if (mCurrentActivityMode == ActivityMode.SEARCH_NEW_FRIENDS) {
-            if (!TextUtils.isEmpty(mCurrentSearchPhrase))
+            if (!TextUtils.isEmpty(mCurrentSearchPhrase)) {
                 mSearchText.setText(mCurrentSearchPhrase);
-            else
-                mSearchText.setText("");
+            }
+            else { mSearchText.setText(""); }
         }
         if (mNeedForUpdate) {
             // load view data
             loadData();
-        } else
-            // show current view data
-            populateListData();
+        }
+        else
+        // show current view data
+        { populateListData(); }
     }
 
     /**
