@@ -1,0 +1,35 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/menu_events"
+          android:title="@string/menu_news"
+          android:icon="@drawable/ic_subject_white_36dp"
+          app:showAsAction="always|withText"/>
+
+    <item android:id="@+id/menu_friends"
+          android:title="@string/menu_friends"
+          android:icon="@drawable/ic_supervisor_account_white_36dp"
+          app:showAsAction="always|withText"/>
+
+    <item android:id="@+id/menu_posts"
+          android:title="@string/menu_posts"
+          android:icon="@drawable/ic_question_answer_white_36dp"
+          app:showAsAction="always|withText"/>
+
+    <item android:id="@+id/add_friend"
+          android:title="@string/add_friend"
+          app:showAsAction="never"/>
+
+    <item android:id="@+id/request"
+          android:title="@string/request"
+          app:showAsAction="never"/>
+
+    <item android:id="@+id/menu_profile"
+          android:title="@string/menu_profile"
+          app:showAsAction="never"/>
+
+    <item android:id="@+id/logout"
+          android:title="@string/menu_logout"
+          app:showAsAction="never"/>
+
+</menu>

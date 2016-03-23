@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tapglue.exampleapp_v2" >
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+
+        <activity
+            android:name="com.tapglue.exampleapp_v2.LoginActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+                android:name="com.tapglue.exampleapp_v2.FeedActivity"
+                android:label="@string/menu_news" >
+        </activity>
+        <activity
+                android:name="com.tapglue.exampleapp_v2.CommentsSubActivity"
+                android:label="@string/comment" >
+        </activity>
+        <activity
+                android:name="com.tapglue.exampleapp_v2.FriendsActivity"
+                android:label="@string/menu_friends" >
+        </activity>
+        <activity
+                android:name="com.tapglue.exampleapp_v2.AddFriendsSubActivity"
+                android:label="@string/search_friend" >
+        </activity>
+        <activity
+                android:name="com.tapglue.exampleapp_v2.RequestSubActivity"
+                android:label="@string/request" >
+        </activity>
+        <activity
+                android:name="com.tapglue.exampleapp_v2.PostsActivity"
+                android:label="@string/post" >
+        </activity>
+        <activity
+                android:name="com.tapglue.exampleapp_v2.EditProfileActivity"
+                android:label="@string/menu_profile" >
+        </activity>
+    </application>
+
+</manifest>
