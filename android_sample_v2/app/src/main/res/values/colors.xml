@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="menu_main_color">#5c8288</color>
+    <color name="button">#965c8288</color>
+    <color name="background">#dddddd</color>
+    <color name="actionBarText">#FFFFFF</color>
+    <color name="user_pic_tint">#dd008fff</color>
+    <color name="comment_tools_tilt">#aeb2b2</color>
+    <color name="liked_tilt">#ad4434</color>
+</resources>
